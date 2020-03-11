@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="context1">
+      <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/wx?serverTimezone=Asia/Shanghai" driverClass="com.mysql.cj.jdbc.Driver" password="123" userId="root" />
+    <javaModelGenerator targetPackage="com.hqyj.entity" targetProject="a1/src/main/java" />
+    <sqlMapGenerator targetPackage="com.hqyj.mapper.xml" targetProject="a1/src/main/java" />
+    <javaClientGenerator targetPackage="com.hqyj.mapper" targetProject="a1/src/main/java" type="XMLMAPPER" />
+    <table catalog="wx" tableName="wx_user">
+      <columnOverride column="id" property="Id" />
+      <columnOverride column="wx_openid" property="wxOpenId" />
+      <columnOverride column="wx_phone" property="wxPhone" />
+      <columnOverride column="identity" property="identity" />
+    </table>
+  </context>
+  
+</generatorConfiguration>

@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link href="css/style3.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="css/style2.css" rel="stylesheet" />
+</head>
+<body>
+
+
+    <section class="aui-flexView">
+        <section class="aui-scrollView">
+            <div class="aui-head-body">
+                <i class="icon icon-news"></i>
+                <img src="images/head2.png" alt="">
+                <div class="aui-user-item">
+                    <div class="aui-mine-user">
+                        <img src="images/user-logo-001.png" alt="">
+                    </div>
+                    <div class="aui-mine-name">
+                        <h2>XXX用户 <i class="icon icon-edit"></i></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-palace">
+                
+                <a href="javascript:;" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="images/icon-head-002.png" alt="">
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>邀请好友</h2>
+                    </div>
+                </a>
+               
+                <a href="javascript:;" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="images/icon-head-004.png" alt="">
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>联系客服</h2>
+                    </div>
+                </a>
+                <a href="javascript:;" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="images/icon-head-005.png" alt="">
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>评价</h2>
+                    </div>
+                </a>
+            </div>
+            
+                <div class="demo" style="position:relative;z-index:50;margin:auto;margin-top:18px">
+  <div class="demo__drone-cont demo__drone-cont--takeoff">
+    <div class="demo__drone-cont demo__drone-cont--shift-x">
+      <div class="demo__drone-cont demo__drone-cont--landing">
+        <svg viewBox="0 0 136 112" class="demo__drone">
+          <g class="demo__drone-leaving">
+            <path class="demo__drone-arm" d="M52,46 c0,0 -15,5 -15,20 l15,10" />
+            <path class="demo__drone-arm demo__drone-arm--2" d="M52,46 c0,0 -15,5 -15,20 l15,10" />
+            <path class="demo__drone-yellow" d="M28,36 l20,0 a20,9 0,0,1 40,0 l20,0 l0,8 l-10,0 c-10,0 -15,0 -23,10 l-14,0 c-10,-10 -15,-10 -23,-10 l-10,0z" />
+            <path class="demo__drone-green" d="M16,12 a10,10 0,0,1 20,0 l-10,50z" />
+            <path class="demo__drone-green" d="M100,12 a10,10 0,0,1 20,0 l-10,50z" />
+            <path class="demo__drone-yellow" d="M9,8 l34,0 a8,8 0,0,1 0,16 l-34,0 a8,8 0,0,1 0,-16z" />
+            <path class="demo__drone-yellow" d="M93,8 l34,0 a8,8 0,0,1 0,16 l-34,0 a8,8 0,0,1 0,-16z" />
+          </g>
+          <path class="demo__drone-package demo__drone-green" d="M50,70 l36,0 l-4,45 l-28,0z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="demo__circle">
+    <div class="demo__circle-inner">
+      <svg viewBox="0 0 16 20" class="demo__circle-package">
+        <path d="M0,0 16,0 13,20 3,20z" />
+      </svg>
+      <div class="demo__circle-grabbers"></div>
+    </div>
+    <svg viewBox="0 0 40 40" class="demo__circle-progress">
+      <path class="demo__circle-progress-line" d="M20,0 a20,20 0 0,1 0,40 a20,20 0 0,1 0,-40" />
+      <path class="demo__circle-progress-checkmark" d="M14,19 19,24 29,14" />
+    </svg>
+  </div>
+  <div class="demo__text-fields">
+    <div class="demo__text demo__text--step-0"><b>取 货</b></div>
+    <div class="demo__text demo__text--step-1">
+      请求中...
+      <span class="demo__text-dots"><span>.</span></span>
+    </div>
+    <div class="demo__text demo__text--step-2">
+      开锁中...
+      <span class="demo__text-dots"><span>.</span></span>
+    </div>
+    <div class="demo__text demo__text--step-3">正在开锁</div>
+    <div class="demo__text demo__text--step-4">完成</div>
+  </div>
+</div>
+
+<script>
+const $demo = document.querySelector('.demo');
+let processing = false;
+
+$demo.addEventListener('click', () => {
+
+  if (processing) return;
+  let reverting = false;
+  processing = true;
+  const $endListener = document.createElement('div');
+  $endListener.classList.add('demo-transitionend-listener');
+  $demo.appendChild($endListener);
+  const layoutTrigger = $demo.offsetTop;
+  $demo.classList.add('s--processing');
+  
+  $endListener.addEventListener('transitionend', () => {
+    if (reverting) return;
+    reverting = true;
+    $demo.classList.add('s--reverting');
+  });
+  
+  setTimeout(() => {
+    $demo.removeChild($endListener);
+    $demo.classList.remove('s--processing', 's--reverting');
+    processing = false;
+  }, 10000);
+});</script>
+            
+            <div class="aui-landlady">
+                <a href="javascript:;" class="aui-flex">
+                    <div class="aui-flex-box">
+                        <h3>向朋友推荐</h3>
+                    </div>
+                    <div class="aui-arrow">
+                        <p></p>
+                    </div>
+                </a>
+                <a href="javascript:;" class="aui-flex">
+                    <div class="aui-flex-box">
+                        <h3>喜欢我们，打分鼓励一下</h3>
+                    </div>
+                    <div class="aui-arrow">
+                        <p></p>
+                    </div>
+                </a>
+                <a href="javascript:;" class="aui-flex">
+                    <div class="aui-flex-box">
+                        <h3>关于我们</h3>
+                    </div>
+                    <div class="aui-arrow">
+                        <p></p>
+                    </div>
+                </a>
+            </div>
+            <div style="height:5rem"></div>
+        </section>
+        <footer class="aui-footer aui-footer-fixed" style="z-index:51">
+           
+            <a href="javascript:;" class="aui-tabBar-item ">
+                <span class="aui-tabBar-item-icon">
+                    <i class="icon icon-credit"></i>
+                </span>
+                <span class="aui-tabBar-item-text">消息</span>
+            </a>
+          
+            <a href="javascript:;" class="aui-tabBar-item aui-tabBar-item-active">
+                <span class="aui-tabBar-item-icon">
+                    <i class="icon icon-my"></i>
+                </span>
+                <span class="aui-tabBar-item-text">我的</span>
+            </a>
+
+        </footer>
+    </section>
+    <!--这行代码可以去掉-->
+    <a href="http://www.bootstrapmb.com" style="display:none">bootstrapmb</a>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoService验证码登录</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    
+    <!-- 按钮 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="css/style7.css">
+    
+</head>
+<body>
+    <section class="aui-flexView">
+        <header class="aui-navBar aui-navBar-fixed">
+            <a href="javascript:;" class="aui-navBar-item">
+                <i class="icon icon-return"></i>
+            </a>
+            <div class="aui-center">
+                <span class="aui-center-title"></span>
+            </div>
+            <a href="https://kf.qq.com" class="aui-navBar-item">
+                客服
+            </a>
+        </header>
+        <section class="aui-scrollView">
+            <div class="aui-ver-head">
+                <img src="images/head.png" alt="">
+            </div>
+            <div class="aui-ver-form">
+                <h2>短信快捷登录</h2>
+                <div class="aui-flex">
+                    <div class="aui-flex-box">
+                        <i class="icon icon-phone"></i>
+                        <input id="phone1" type="text" autocomplete="off" placeholder="手机号码">
+                    </div>
+                </div>
+                <div class="aui-flex">
+                    <div class="aui-flex-box">
+                        <i class="icon icon-code"></i>
+                        <input id="code1" type="text" autocomplete="off" placeholder="验证码" >
+                    </div>
+                    <div class="aui-button-code">
+                        <input id="btnSendCode1" type="button" class="btn btn-default" value="获取验证码" onclick="sendMessage1()" />
+                    </div>
+                </div>
+                <div class="aui-navBar-item" >
+					<div>
+                      <span>你是否是快递员?</span>
+                    </div>
+                    <div class="aui-flex-box" style="padding-right:115px;"></div>
+					<div class="aui-button-code">
+					 <input id="chck" type="checkbox">
+					 <label for="chck" class="check-trail">
+						<span class="check-handler"></span>
+					 </label>
+					 </div>
+				</div>
+                <div class="aui-ver-button">
+                    <button onclick="binding()">立即登录 / 注册</button>
+                </div>
+            </div>
+        </section>
+    </section>
+</body>
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/index.js"></script>
+<script type="text/javascript">
+    var phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
+    var count = 60;
+    var InterValObj1;
+    var curCount1;
+    function sendMessage1() {
+        curCount1 = count;
+        var phone = $.trim($('#phone1').val());
+        if (!phoneReg.test(phone)) {
+            alert("请输入有效的手机号码");
+            return false;
+        }
+        
+		$.ajax({
+			url:"/a1/test",
+			data:{'phone':$('#phone1').val()},
+		})
+        
+        $("#btnSendCode1").attr("disabled", "true");
+        $("#btnSendCode1").val(+curCount1 + "秒再获取");
+        InterValObj1 = window.setInterval(SetRemainTime1, 1000);
+
+    }
+    function SetRemainTime1() {
+        if (curCount1 == 0) {
+            window.clearInterval(InterValObj1);
+            $("#btnSendCode1").removeAttr("disabled");
+            $("#btnSendCode1").val("重新发送");
+        }
+        else {
+            curCount1--;
+            $("#btnSendCode1").val(+curCount1 + "秒再获取");
+        }
+    }
+
+    function binding() {
+    	
+    	var phone = $.trim($('#phone1').val());
+    	
+    	 if(!phoneReg.test(phone)){
+    		alert("请输入有效的手机号码");
+    	}else{
+    		if($("#code1").val()==null){
+    			alert("请输入验证码");
+    		}else{
+    			$.ajax({
+    				url:"/a1/register",
+    				data:{'code':$('#code1').val()},
+    				success:function(c){
+    					if(c==0){
+    						alert("验证错误,请重新输入!");
+    					}else{
+    						var aaa = $("#chck").prop("checked");
+    						var IDcard=0;
+    						if(aaa){
+    						 IDcard=1;
+    						 }
+    							 $.ajax({
+    	    							url:"/a1/login",
+    	    							data:{'ok':'ok',"IDcard":IDcard},
+    	    							success:function(c){
+    	    								window.location.href="http://jc02.free.idcfengye.com/a1/"+c;
+    	    							}
+    	    						})
+ 
+    					}
+    					
+    				}
+    			})
+    		}
+    	}
+        
+    }
+    
+</script>
+</html>
